@@ -1,3 +1,29 @@
+// Dropdown Menu Functionality
+const menuIcon = document.getElementById('menuIcon');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+if (menuIcon && dropdownMenu) {
+    // Toggle dropdown on menu icon click
+    menuIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!menuIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('active');
+        }
+    });
+
+    // Close dropdown when clicking a menu item
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            dropdownMenu.classList.remove('active');
+        });
+    });
+}
+
 // Smooth Scroll for all links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -41,19 +67,21 @@ const faqItems = document.querySelectorAll('.faq-item');
 
 faqItems.forEach(item => {
     item.addEventListener('click', () => {
-        // Toggle active class
-        item.classList.toggle('active');
+        const isActive = item.classList.contains('active');
         
-        // Rotate the icon
-        const icon = item.querySelector('.faq-icon');
-        if (item.classList.contains('active')) {
-            icon.style.transform = 'rotate(180deg)';
+        // Close all other FAQ items
+        faqItems.forEach(otherItem => {
+            if (otherItem !== item) {
+                otherItem.classList.remove('active');
+            }
+        });
+        
+        // Toggle current item
+        if (isActive) {
+            item.classList.remove('active');
         } else {
-            icon.style.transform = 'rotate(0deg)';
+            item.classList.add('active');
         }
-        
-        // If you want to add answer content, you can expand here
-        // For now, it just rotates the icon as a visual feedback
     });
 });
 
@@ -106,8 +134,17 @@ if (contactBtn) {
     });
 }
 
+// Navigate to Services Page
+const exploreServicesBtn = document.querySelector('.btn-explore');
+
+if (exploreServicesBtn) {
+    exploreServicesBtn.addEventListener('click', () => {
+        window.location.href = 'services.html';
+    });
+}
+
 // CTA button interactions
-const ctaButtons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-explore, .btn-view-more');
+const ctaButtons = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-view-more');
 
 ctaButtons.forEach(btn => {
     btn.addEventListener('click', function(e) {

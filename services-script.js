@@ -1,3 +1,29 @@
+// Dropdown Menu Functionality
+const menuIcon = document.getElementById('menuIcon');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+if (menuIcon && dropdownMenu) {
+    // Toggle dropdown on menu icon click
+    menuIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!menuIcon.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('active');
+        }
+    });
+
+    // Close dropdown when clicking a menu item
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', () => {
+            dropdownMenu.classList.remove('active');
+        });
+    });
+}
+
 // Smooth scroll functionality
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -16,7 +42,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const scrollTopBtn = document.querySelector('.scroll-top');
 
 if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', () => {
+    // Initial state - hide button at top of page
+    scrollTopBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    scrollTopBtn.style.opacity = '0';
+    scrollTopBtn.style.pointerEvents = 'none';
+    
+    // Click handler - scroll to top
+    scrollTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -32,6 +65,15 @@ if (scrollTopBtn) {
             scrollTopBtn.style.opacity = '0';
             scrollTopBtn.style.pointerEvents = 'none';
         }
+    });
+    
+    // Add hover effect
+    scrollTopBtn.addEventListener('mouseenter', () => {
+        scrollTopBtn.style.transform = 'translateY(-4px)';
+    });
+    
+    scrollTopBtn.addEventListener('mouseleave', () => {
+        scrollTopBtn.style.transform = 'translateY(0)';
     });
 }
 
@@ -106,14 +148,7 @@ document.querySelectorAll('.service-item').forEach(item => {
     });
 });
 
-// Mobile menu toggle (if needed)
-const menuIcon = document.querySelector('.menu-icon');
-if (menuIcon) {
-    menuIcon.addEventListener('click', () => {
-        // Add mobile menu functionality here if needed
-        console.log('Menu clicked');
-    });
-}
+// Mobile menu toggle functionality is handled by dropdown menu code above
 
 // Lazy load images
 if ('IntersectionObserver' in window) {

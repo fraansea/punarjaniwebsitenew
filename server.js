@@ -402,13 +402,28 @@ app.post('/api/upload', authenticateToken, upload.single('file'), (req, res) => 
     });
 });
 
+// Admin routes
+app.get('/admin', (req, res) => {
+    res.redirect('/admin-login.html');
+});
+
+app.get('/admin/dashboard', authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
 // Initialize data file if it doesn't exist
 if (!fs.existsSync('data.json')) {
     saveData(getDefaultData());
 }
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Admin panel: http://localhost:${PORT}/admin-login.html`);
-    console.log(`Default credentials: username: admin, password: admin123`);
-});
+// Export for Vercel serverless
+module.exports = app;
+
+// Only listen when running locally
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+        console.log(`Admin panel: http://localhost:${PORT}/admin`);
+        console.log(`Default credentials: username: admin, password: admin123`);
+    });
+}
