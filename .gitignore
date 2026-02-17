@@ -1,9 +1,9 @@
 # Dependencies
 node_modules/
-# package-lock.json - Keep this for Vercel deployment
+package-lock.json
 
 # Data
-# data.json - Commented out for Vercel deployment (serverless needs initial data)
+data.json
 
 # Uploads
 uploads/
@@ -34,6 +34,3 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
-
-# Vercel
-.vercel

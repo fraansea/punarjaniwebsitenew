@@ -36,22 +36,15 @@ const upload = multer({ storage });
 // Load data
 const loadData = () => {
     try {
-        const dataPath = path.join(__dirname, 'data.json');
-        return JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+        return JSON.parse(fs.readFileSync('data.json', 'utf8'));
     } catch (error) {
-        console.log('Using default data:', error.message);
         return getDefaultData();
     }
 };
 
 // Save data
 const saveData = (data) => {
-    try {
-        const dataPath = path.join(__dirname, 'data.json');
-        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error('Error saving data:', error.message);
-    }
+    fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
 };
 
 // Get default data structure
@@ -414,29 +407,17 @@ app.get('/admin', (req, res) => {
     res.redirect('/admin-login.html');
 });
 
-app.get('/admin/dashboard', (req, res) => {
-    res.redirect('/admin.html');
+app.get('/admin/dashboard', authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 // Initialize data file if it doesn't exist
-try {
-    const dataPath = path.join(__dirname, 'data.json');
-    if (!fs.existsSync(dataPath)) {
-        console.log('Initializing data.json with default data');
-        saveData(getDefaultData());
-    }
-} catch (error) {
-    console.error('Error initializing data:', error.message);
+if (!fs.existsSync('data.json')) {
+    saveData(getDefaultData());
 }
 
-// Export for Vercel serverless
-module.exports = app;
-
-// Only listen when running locally
-if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`Server running on http://localhost:${PORT}`);
-        console.log(`Admin panel: http://localhost:${PORT}/admin`);
-        console.log(`Default credentials: username: admin, password: admin123`);
-    });
-}
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Admin panel: http://localhost:${PORT}/admin`);
+    console.log(`Default credentials: username: admin, password: admin123`);
+});
