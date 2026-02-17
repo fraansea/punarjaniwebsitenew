@@ -3,15 +3,19 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/server.js"
+      "destination": "/api"
     },
     {
       "source": "/admin",
-      "destination": "/server.js"
+      "destination": "/api"
     },
     {
       "source": "/admin/dashboard",
-      "destination": "/server.js"
+      "destination": "/api"
+    },
+    {
+      "source": "/uploads/(.*)",
+      "destination": "/api"
     }
   ]
 }

@@ -36,15 +36,22 @@ const upload = multer({ storage });
 // Load data
 const loadData = () => {
     try {
-        return JSON.parse(fs.readFileSync('data.json', 'utf8'));
+        const dataPath = path.join(__dirname, 'data.json');
+        return JSON.parse(fs.readFileSync(dataPath, 'utf8'));
     } catch (error) {
+        console.log('Using default data:', error.message);
         return getDefaultData();
     }
 };
 
 // Save data
 const saveData = (data) => {
-    fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+    try {
+        const dataPath = path.join(__dirname, 'data.json');
+        fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+    } catch (error) {
+        console.error('Error saving data:', error.message);
+    }
 };
 
 // Get default data structure
@@ -407,13 +414,19 @@ app.get('/admin', (req, res) => {
     res.redirect('/admin-login.html');
 });
 
-app.get('/admin/dashboard', authenticateToken, (req, res) => {
-    res.sendFile(path.join(__dirname, 'admin.html'));
+app.get('/admin/dashboard', (req, res) => {
+    res.redirect('/admin.html');
 });
 
 // Initialize data file if it doesn't exist
-if (!fs.existsSync('data.json')) {
-    saveData(getDefaultData());
+try {
+    const dataPath = path.join(__dirname, 'data.json');
+    if (!fs.existsSync(dataPath)) {
+        console.log('Initializing data.json with default data');
+        saveData(getDefaultData());
+    }
+} catch (error) {
+    console.error('Error initializing data:', error.message);
 }
 
 // Export for Vercel serverless
