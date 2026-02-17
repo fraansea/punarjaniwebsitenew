@@ -1,0 +1,668 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    /* Colors from Figma */
+    --bg-primary: #ECEDE7;
+    --bg-white: #FFFFFF;
+    --text-primary: #131313;
+    --text-secondary: #464646;
+    --text-tertiary: #636360;
+    --accent-pink: #FBDBFC;
+    --accent-purple: #F9DFFA;
+    --footer-text: #959691;
+    --map-border: #D0D0D0;
+    
+    /* Fonts from Figma */
+    --font-heading: 'Arapey', serif;
+    --font-body: 'Instrument Sans', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+    --font-tertiary: 'Figtree', sans-serif;
+}
+
+body {
+    font-family: var(--font-body);
+    background: linear-gradient(180deg, #ECEDE7 0%, #FFFFFF 100%);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+.contact-wrapper {
+    width: 100%;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1420px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Header */
+.header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 33px 43px;
+}
+
+.menu-wrapper {
+    position: absolute;
+    left: 43px;
+    top: 33px;
+    z-index: 200;
+}
+
+.menu-icon {
+    width: 63px;
+    height: 63px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.menu-icon:hover {
+    transform: scale(1.05);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 75px;
+    left: 0;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    padding: 12px 0;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 
+                0 1px 0 rgba(255, 255, 255, 0.4) inset;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    z-index: 199;
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: block;
+    padding: 14px 24px;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.dropdown-item:hover {
+    background: rgba(249, 223, 250, 0.35);
+    border-left-color: var(--text-primary);
+    padding-left: 28px;
+}
+
+.logo {
+    width: 209px;
+    height: 63px;
+    object-fit: contain;
+}
+
+.contact-btn {
+    position: absolute;
+    right: 43px;
+    top: 33px;
+    background: var(--bg-white);
+    border: none;
+    border-radius: 63.48px;
+    padding: 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 18.1px;
+    line-height: 1.30em;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 160.24px;
+    height: 63.45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+}
+
+.contact-btn::before {
+    content: '';
+    position: absolute;
+    left: 9.06px;
+    top: 9.06px;
+    width: 45.33px;
+    height: 45.33px;
+    background: var(--accent-purple);
+    border-radius: 45.35px;
+}
+
+.contact-btn::after {
+    content: '';
+    position: absolute;
+    left: 18.1px;
+    top: 20.9px;
+    width: 27.2px;
+    height: 27.2px;
+    background-image: url("data:image/svg+xml,%3Csvg width='28' height='28' viewBox='0 0 28 28' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 14H23M23 14L14 5M23 14L14 23' stroke='%23131313' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.contact-btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    gap: 19px;
+    max-width: 1630px;
+    margin: 92px auto 200px auto;
+    padding: 0 40px;
+    justify-content: center;
+}
+
+/* Info Card */
+.info-card {
+    background: var(--accent-pink);
+    border-radius: 43px;
+    padding: 55px 52px 55px 38px;
+    width: 881px;
+    height: 750px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.clinic-title {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 81.6px;
+    line-height: 1.11em;
+    letter-spacing: -0.05em;
+    color: var(--text-primary);
+    margin-bottom: 36px;
+    margin-left: 14px;
+}
+
+.title-italic {
+    font-style: italic;
+}
+
+.title-regular {
+    font-style: normal;
+}
+
+.clinic-description {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.22em;
+    color: var(--text-secondary);
+    margin-bottom: 58px;
+    max-width: 612px;
+}
+
+/* Info Sections */
+.info-sections-wrapper {
+    display: flex;
+    gap: 77px;
+    margin-bottom: 80px;
+}
+
+.info-section {
+    flex: 1;
+}
+
+.section-icon-wrapper {
+    width: 72.55px;
+    height: 72.55px;
+    margin-bottom: 36px;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 40.8px;
+    line-height: 1.11em;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 21px;
+}
+
+.consultation-time {
+    font-family: var(--font-secondary);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.13em;
+    letter-spacing: -0.038em;
+    color: var(--text-secondary);
+    margin: 0 0 21px 0;
+}
+
+.consultation-note {
+    font-family: var(--font-secondary);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.36em;
+    letter-spacing: -0.045em;
+    color: var(--text-secondary);
+    max-width: 328px;
+    margin: 0;
+}
+
+/* Lets Talk Section */
+.lets-talk-section {
+    position: absolute;
+    bottom: 70px;
+    left: 38px;
+    display: flex;
+    flex-direction: column;
+    gap: 14.44px;
+}
+
+.lets-talk-title {
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    font-size: 20.08px;
+    line-height: 1.42em;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.contact-link {
+    font-family: var(--font-tertiary);
+    font-weight: 400;
+    font-size: 20.08px;
+    line-height: 1.20em;
+    letter-spacing: -0.05em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: var(--text-primary);
+}
+
+/* Map Container */
+.map-container {
+    width: 440px;
+    flex-shrink: 0;
+}
+
+.map-image {
+    width: 440px;
+    height: 727px;
+    border-radius: 40px;
+    border: 1px solid var(--map-border);
+    margin-bottom: 4px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.map-image iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 40px;
+}
+
+.map-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 96px;
+}
+
+.location-label {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    font-size: 22.7px;
+    line-height: 1.40em;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+}
+
+.directions-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 18.1px;
+    line-height: 1.50em;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.directions-link:hover {
+    transform: translateX(5px);
+}
+
+/* Footer */
+.footer {
+    padding: 191px 0 0;
+    position: relative;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 180px;
+}
+
+.footer-logo .logo {
+    width: 209px;
+    height: 63px;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 314px;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+}
+
+.contact-col {
+    gap: 14px;
+}
+
+.footer-link {
+    font-family: var(--font-secondary);
+    font-weight: 400;
+    font-size: 20.08px;
+    line-height: 1.50em;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.footer-link:hover {
+    opacity: 1;
+}
+
+.footer-heading {
+    font-family: var(--font-secondary);
+    font-weight: 500;
+    font-size: 20.08px;
+    line-height: 1.42em;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.footer-contact {
+    font-family: var(--font-tertiary);
+    font-weight: 400;
+    font-size: 20.08px;
+    line-height: 1.20em;
+    letter-spacing: -0.05em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contact:hover {
+    color: var(--text-primary);
+}
+
+/* Footer Large Text */
+.footer-large-text {
+    text-align: center;
+    margin: -18px 0 0 -18px;
+    overflow: hidden;
+}
+
+.footer-large-text img {
+    width: 100%;
+    max-width: 1920px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    opacity: 0.15;
+}
+
+/* Scroll to Top Button */
+.scroll-top {
+    position: absolute;
+    bottom: 43px;
+    right: 64px;
+    width: 64px;
+    height: 64px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.scroll-top:hover {
+    transform: translateY(-4px);
+}
+
+.scroll-top img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 1600px) {
+    .container {
+        padding: 0 40px;
+    }
+
+    .main-content {
+        max-width: 100%;
+        padding: 0 100px;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .info-card {
+        width: 100%;
+        max-width: 881px;
+        height: auto;
+        min-height: 750px;
+        padding-bottom: 150px;
+    }
+
+    .map-container {
+        width: 100%;
+        max-width: 440px;
+    }
+
+    .map-image {
+        width: 100%;
+        height: 600px;
+    }
+
+    .map-image iframe {
+        border-radius: 40px;
+    }
+
+    .footer-nav {
+        gap: 150px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        padding: 0 40px;
+    }
+
+    .main-content {
+        max-width: 100%;
+        padding: 0 40px;
+    }
+
+    .info-sections-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .footer-nav {
+        gap: 80px;
+    }
+
+    .footer-large-text img {
+        max-width: 1200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 20px;
+    }
+
+    .menu-wrapper {
+        left: 20px;
+        top: 20px;
+    }
+
+    .menu-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .logo {
+        width: 160px;
+        height: 48px;
+    }
+
+    .contact-btn {
+        right: 20px;
+        top: 20px;
+        width: 130px;
+        font-size: 14px;
+    }
+
+    .main-content {
+        max-width: 100%;
+        padding: 0 20px;
+        margin-top: 40px;
+        margin-bottom: 100px;
+    }
+
+    .info-card {
+        padding: 40px 30px;
+        padding-bottom: 120px;
+    }
+
+    .clinic-title {
+        font-size: 48px;
+        margin-left: 0;
+    }
+
+    .clinic-description {
+        font-size: 18px;
+    }
+
+    .section-title {
+        font-size: 32px;
+    }
+
+    .consultation-time,
+    .consultation-note {
+        font-size: 16px;
+    }
+
+    .map-image {
+        width: 100%;
+        height: 500px;
+    }
+
+    .map-image iframe {
+        width: 100%;
+        height: 100%;
+        border-radius: 40px;
+    }
+
+    .map-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .footer-large-text img {
+        max-width: 768px;
+    }
+}
+
+@media (max-width: 480px) {
+    .clinic-title {
+        font-size: 36px;
+    }
+
+    .clinic-description {
+        font-size: 16px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .consultation-time,
+    .consultation-note {
+        font-size: 14px;
+    }
+
+    .map-image {
+        width: 100%;
+        height: 400px;
+    }
+
+    .map-image iframe {
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+    }
+
+    .footer-large-text img {
+        max-width: 480px;
+    }
+}

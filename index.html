@@ -16,9 +16,17 @@
         
         <!-- Header/Navigation -->
         <header class="header">
-            <img src="assets/images/menu-icon-4dot.svg" alt="Menu" class="menu-icon">
+            <div class="menu-wrapper">
+                <img src="assets/images/menu-icon-4dot.svg" alt="Menu" class="menu-icon" id="menuIcon">
+                <nav class="dropdown-menu" id="dropdownMenu">
+                    <a href="index.html" class="dropdown-item">Home</a>
+                    <a href="services.html" class="dropdown-item">Services</a>
+                    <a href="#doctors" class="dropdown-item">Doctor</a>
+                    <a href="contact.html" class="dropdown-item">Contact</a>
+                </nav>
+            </div>
             <img src="assets/images/logo-eb5780.png" alt="Punarjanii Logo" class="logo">
-            <button class="contact-btn"><span>Contact</span></button>
+            <button class="contact-btn" onclick="window.location.href='contact.html'"><span>Contact</span></button>
         </header>
 
         <!-- Hero Content -->
@@ -313,8 +321,8 @@
                         <a href="#" class="footer-link">Pricing</a>
                     </div>
                     <div class="footer-col">
-                        <a href="#" class="footer-link">Contact</a>
-                        <a href="#" class="footer-link">Services</a>
+                        <a href="contact.html" class="footer-link">Contact</a>
+                        <a href="services.html" class="footer-link">Services</a>
                     </div>
                     <div class="footer-col contact-col">
                         <p class="footer-heading">Lets Talk</p>
