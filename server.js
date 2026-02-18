@@ -8,7 +8,11 @@ const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 4500;
-const JWT_SECRET = 'your-secret-key-change-this-in-production';
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-this-in-production';
+
+const IS_VERCEL = Boolean(process.env.VERCEL);
+const DATA_PATH = IS_VERCEL ? '/tmp/data.json' : path.join(__dirname, 'data.json');
+const UPLOADS_DIR = IS_VERCEL ? '/tmp/uploads' : path.join(__dirname, 'uploads');
 
 // Middleware
 app.use(cors());
@@ -20,11 +24,14 @@ app.use('/uploads', express.static('uploads'));
 // File upload configuration
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const uploadDir = 'uploads/';
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
+        try {
+            if (!fs.existsSync(UPLOADS_DIR)) {
+                fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+            }
+            cb(null, UPLOADS_DIR);
+        } catch (e) {
+            cb(e);
         }
-        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + '-' + file.originalname);
@@ -36,7 +43,7 @@ const upload = multer({ storage });
 // Load data
 const loadData = () => {
     try {
-        return JSON.parse(fs.readFileSync('data.json', 'utf8'));
+        return JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
     } catch (error) {
         return getDefaultData();
     }
@@ -44,7 +51,11 @@ const loadData = () => {
 
 // Save data
 const saveData = (data) => {
-    fs.writeFileSync('data.json', JSON.stringify(data, null, 2));
+    try {
+        fs.writeFileSync(DATA_PATH, JSON.stringify(data, null, 2));
+    } catch (e) {
+        // On Vercel, filesystem writes are ephemeral; fail gracefully.
+    }
 };
 
 // Get default data structure
@@ -412,12 +423,20 @@ app.get('/admin/dashboard', authenticateToken, (req, res) => {
 });
 
 // Initialize data file if it doesn't exist
-if (!fs.existsSync('data.json')) {
-    saveData(getDefaultData());
+try {
+    if (!fs.existsSync(DATA_PATH)) {
+        saveData(getDefaultData());
+    }
+} catch (e) {
+    // ignore
 }
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Admin panel: http://localhost:${PORT}/admin`);
-    console.log(`Default credentials: username: admin, password: admin123`);
-});
+module.exports = app;
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on http://localhost:${PORT}`);
+        console.log(`Admin panel: http://localhost:${PORT}/admin`);
+        console.log(`Default credentials: username: admin, password: admin123`);
+    });
+}
