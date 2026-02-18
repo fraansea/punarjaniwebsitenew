@@ -40,13 +40,7 @@ body {
 .container {
     max-width: 1420px;
     margin: 0 auto;
-    padding: 0 40px;
-}
-
-@media (max-width: 1600px) {
-    .container {
-        padding: 0 40px;
-    }
+    padding: 0 clamp(15px, 4vw, 40px);
 }
 
 /* Hero Section */
@@ -356,7 +350,7 @@ body {
     background: var(--white);
     border-radius: 22.67px;
     padding: 48px 73px;
-    width: 1324.37px;
+    width: min(1324.37px, calc(100% - (2 * clamp(15px, 4vw, 40px))));
     margin: 80px auto 0;
     position: absolute;
     z-index: 10;
@@ -424,7 +418,7 @@ body {
 }
 
 .stat-description {
-    width: 483px;
+    width: min(483px, 100%);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -718,7 +712,7 @@ body {
 }
 
 .doctor-image-container {
-    width: 881px;
+    width: min(881px, 100%);
     height: 670px;
     border-radius: 22.67px;
     overflow: hidden;
@@ -736,6 +730,10 @@ body {
     position: absolute;
     bottom: 24px;
     left: 32px;
+    right: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .doctor-name {
@@ -745,11 +743,8 @@ body {
     line-height: 1.40em;
     letter-spacing: -0.03em;
     color: var(--text-primary);
-    margin-bottom: 12px;
-    position: absolute;
-    left: 707px;
-    top: 4px;
-    width: 96px;
+    margin: 0;
+    width: auto;
 }
 
 .learn-more {
@@ -1101,8 +1096,12 @@ body {
         height: 500px;
     }
     
-    .container {
-        padding: 0 40px;
+}
+
+/* Figma breakpoint: 1024w default */
+@media (max-width: 1024px) {
+    .hero-content {
+        padding: 0;
     }
 }
 
@@ -1190,33 +1189,70 @@ body {
     }
     
     .hero-cta {
-        flex-direction: column;
+        /* Figma 768w keeps CTA side-by-side */
+        flex-direction: row;
         align-items: center;
     }
     
     .btn-primary, .btn-secondary {
-        width: 100%;
-        max-width: 300px;
+        max-width: none;
+    }
+
+    .btn-primary {
+        width: 200.63px;
+    }
+
+    .btn-secondary {
+        width: 194px;
     }
     
+    /* Stats (Figma 768w uses compact row + description below) */
     .stats-card {
-        margin: 60px auto 0;
-        padding: 40px 30px;
+        width: 562px;
+        border-radius: 19.07px;
+        padding: 31px 49px 31px 49px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 712px;
+        margin: 0;
     }
     
     .stats-grid {
-        flex-direction: column;
-        gap: 30px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
     }
-    
+
     .stat-item:nth-child(1),
     .stat-item:nth-child(2),
     .stat-item:nth-child(3) {
-        width: 100%;
+        width: 131px;
+    }
+
+    .stat-value {
+        font-size: 45.8px;
+        line-height: 1.1991em;
+        letter-spacing: -0.03em;
+    }
+
+    .stat-plus {
+        font-size: 22.9px;
+        line-height: 1.2991em;
+    }
+
+    .stat-label {
+        font-size: 18.1px;
+        line-height: 1.1221em;
+        letter-spacing: -0.03em;
+        text-align: center;
     }
     
     .stat-description {
         width: 100%;
+        align-items: center;
+        text-align: center;
     }
     
     .services-header {
